@@ -1,3 +1,6 @@
+| WARNING: This project is for storing test keys only since they are saved and send plain test. |
+| --- |
+
 # Golem Granary
 
 The golem granary is an application to store keys and re-use keys for tests.
