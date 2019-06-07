@@ -1,4 +1,4 @@
-| WARNING: This project is for storing test keys only since they are saved and send plain test. |
+| WARNING: This project is for storing test keys only since they are saved and send plain text. |
 | --- |
 
 # Golem Granary
