@@ -16,7 +16,7 @@ const DESCRIPTION: &'static str = env!("CARGO_PKG_DESCRIPTION");
 const CMD_GET_USED_ACCOUNT: &'static str = "get_used_account";
 const CMD_RETURN_USED_ACCOUNT: &'static str = "return_used_account";
 
-const BASE_DIR: &'static str = "/Users/mwu-gol/tmp/granary/";
+const BASE_DIR: &'static str = "/home/granary/.granary/";
 const LOCK_FILE_NAME: &'static str = "lock";
 const KEY_FILE_NAME: &'static str = "key";
 const TS_FILE_NAME: &'static str = "ts";
