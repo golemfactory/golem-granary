@@ -1,6 +1,4 @@
 use std::fs;
-use std::io::Read;
-use std::io::Write;
 
 use clap::{App, Arg, SubCommand};
 
@@ -77,24 +75,20 @@ fn _request_used_account() -> std::io::Result<()> {
             debug!("file NOT locked");
 
             // Lock keys
-            let _lock = fs::File::create(lock_file)?;
+            let _lock = fs::write(lock_file, [])?;
             debug!("lock created");
 
             // return data
             let mut key_file = entry.path();
             key_file.push(KEY_FILE_NAME);
 
-            let mut key = fs::File::open(key_file)?;
-            let mut contents = String::new();
-            key.read_to_string(&mut contents)?;
+            let contents = fs::read_to_string(key_file)?;
             println!("{}", contents);
 
             let mut ts_file = entry.path();
             ts_file.push(TS_FILE_NAME);
 
-            let mut ts = fs::File::open(ts_file)?;
-            let mut contents = String::new();
-            ts.read_to_string(&mut contents)?;
+            let contents = fs::read_to_string(ts_file)?;
             println!("{}", contents);
 
             debug!("returned key data");
@@ -126,28 +120,21 @@ fn _return_used_account(
     // if existed, compare private key data
     if key_exists {
         debug!("updating key...");
-        let mut key = fs::File::open(key_file)?;
-        let mut contents = String::new();
-        key.read_to_string(&mut contents)?;
+        let contents = fs::read_to_string(key_file)?;
         assert!(priv_key == contents);
 
-        let mut ts = fs::File::open(ts_file)?;
-        ts.write_all(transactions.as_bytes())?;
+        fs::write(ts_file, transactions.as_bytes())?;
 
+        // if existed, remove lock
         let lock_file = key_folder.join(LOCK_FILE_NAME);
         fs::remove_file(lock_file)?;
     }
     // if new, write private key data
     else {
         debug!("creating key...");
-        let mut key = fs::File::create(key_file)?;
-        key.write_all(&priv_key.into_bytes())?;
-
-        let mut ts = fs::File::create(ts_file)?;
-        ts.write_all(&transactions.into_bytes())?;
+        fs::write(key_file, &priv_key.into_bytes())?;
+        fs::write(ts_file, &transactions.into_bytes())?;
     }
-
-    // if existed, remove lock
 
     // return "OK"
     Ok(())
