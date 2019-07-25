@@ -29,3 +29,27 @@ re-try please when you get an error
 more errors TBD
 
 logs can be found in `~/.granary/logs/granary_<DATE>.log`
+
+
+## Running from sources on Ubuntu Linux
+
+### Prerequisites
+
+If you don't have a Rust compiler installed, start with:
+
+`sudo apt install rustc cargo`
+
+(or use some other, distribution-dependent
+command that installs the rust compiler on your machine)
+
+### Installation
+
+To install `golem-granary` from sources:
+
+1. `git clone https://github.com/golemfactory/golem-granary.git`
+2. `cd golem-granary`
+3. `cargo build`
+4. `sudo cp target/debug/golem-granary /usr/local/bin`
+(or otherwise add the `golem-granary` binary to your `PATH`)
+
+done! :)
